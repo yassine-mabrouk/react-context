@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Component } from 'react';
+
+import Navbar from './component/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css'; 
+import Contacts from './component/Contacts';
+import Profider from './component/Context';
+import AddContact from './component/addContact';
+
+class App extends Component {
+  render(){
+    let title = "Client Panel  "
+    return (
+     
+        <Profider>
+           <div className="div">
+          <Navbar title= {title} ></Navbar>
+          <AddContact></AddContact>
+          <Contacts></Contacts>
+        </div>
+        </Profider>
+    )
+  }
 }
-
 export default App;
