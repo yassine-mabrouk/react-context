@@ -4,7 +4,7 @@ import Contacts from './Contacts';
 import TextInputGroup from '../helpers/textInputGroup';
 import axios from 'axios'
 
- class AddContact extends Component {
+ class EditContact extends Component {
    
      state = {
          name : '',
@@ -17,7 +17,7 @@ import axios from 'axios'
              [e.target.name]:e.target.value
          })
      }
-     saveContact = (dispatch,size,e) => {
+     editContact = (dispatch,e) => {
       //   e.preventDefault()
          e.preventDefault();
          const {name ,email, phone}= this.state;
@@ -51,16 +51,17 @@ import axios from 'axios'
             email:  email,
             phone :  phone
            }
-           axios.post("https://jsonplaceholder.typicode.com/users",newContact)
+           const id = this.props.match.params.id
+           axios.put("https://jsonplaceholder.typicode.com/users/"+id,newContact)
         .then(res => {
             console.log(res.data)
             
             dispatch ({
-                type: 'ADD_CONTACT',
+                type: 'EDIT_CONTACT',
                 payload:res.data
             })
         })
-        .catch(err => console.log("cannot add contact "))
+        .catch(err => console.log("cannot edit contact "))
      
        this.setState({
         name : '',
@@ -72,6 +73,20 @@ import axios from 'axios'
        this.props.history.push('/');
 
     }
+
+    componentDidMount(){
+        const id = this.props.match.params.id
+        console.log(id)
+        axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
+        .then(res => {
+            this.setState({
+                name : res.data.name,
+                email: res.data.email,
+                phone : res.data.phone,
+            })
+        })
+        .catch(err => console.log("Cannot get contact to update !!"))
+    }
     render() {
         const {name ,email, phone,errors}= this.state;
         return (
@@ -82,7 +97,7 @@ import axios from 'axios'
                           return (
                             <div className="container mt-2 mb-2 ">
                             <h3>Add Contact</h3>
-                        <form  onSubmit={ this.saveContact.bind(this,dispatch,value.contacts.length)} >
+                        <form  onSubmit={ this.editContact.bind(this,dispatch)} >
                          <TextInputGroup
                          label="Name"
                          type="text"
@@ -108,7 +123,7 @@ import axios from 'axios'
                          error={errors.phone}                     
                          />
                    
-                        <button type='submit' className="btn btn-block btn-primary">Submit</button>
+                        <button type='submit' className="btn btn-block btn-warning">Edit Contact</button>
                         </form>
                         </div>
                           )
@@ -120,4 +135,4 @@ import axios from 'axios'
         )
     }
 }
-export default  AddContact
+export default  EditContact

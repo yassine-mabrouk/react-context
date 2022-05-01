@@ -17,3 +17,9 @@ code {
   color: red;
   float: right;
 }
+.myIcon2 {
+  cursor: pointer;
+  float: right;
+  color: orange;
+  margin-right: 8px;
+}

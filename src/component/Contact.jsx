@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-
+import axios from 'axios'
 import { Consumer } from './Context';
+import { Link } from 'react-router-dom';
    class Contact extends Component {
        
      state = { 
@@ -13,21 +14,25 @@ import { Consumer } from './Context';
             showTogle:!this.state.showTogle
         }); 
     }
-    onDeleteContact=(id , dispatch)=> {
     
-        console.log("ondeleteContact "+ id)
-        console.log(dispatch)
-        dispatch({
-            type: "DELETE_CONTACT",
-            payload:id 
-        })
+    onDeleteContact=(id , dispatch)=> {
+          axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+          .then (res => {
+            dispatch({
+                type: "DELETE_CONTACT",
+                payload:id 
+            })
+            console.log("delete contact: "+ id )
+          })
+          .catch(err => console.log("Cannot delete contact "))
+  
         // pour acceder a une props de type function il faut avoir arow function 
         //this.props.deleteContact()
     }
- 
+  
     render() {
      
-        const {id,  name , tel , email }= this.props.data;
+        const {id,  name , phone , email }= this.props.data;
       
         return (
             <Consumer>
@@ -37,10 +42,11 @@ import { Consumer } from './Context';
                         <h4 className="card-title">{name}
                         <i  onClick={()=> this.showContact()} className='fa fa-sort-down'></i>
                         <i  onClick={()=> this.onDeleteContact(id ,value.dispatch)} className='fa fa-times myIcon'></i>
+                         <Link to = {"/contact/edit/"+id}>   <i class="fa fa-pencil myIcon2"  ></i></Link>
                         </h4>   
                    <div className="cart-text">
                      { (this.state.showTogle) ? (    <ul className="list-group list-group-flush">
-                        <li className="list-group-item">Tel :{tel}</li>
+                        <li className="list-group-item">phone :{phone}</li>
                         <li className="list-group-item">Email: {email}</li>
                         
                     </ul>) : null  }
@@ -58,7 +64,7 @@ import { Consumer } from './Context';
 // add default props 
 // Contact.defaultProps= {
 //     name: "Default name ",
-//     tel : "0000000",
+//     phone : "0000000",
 //     email: "email@gmail.com"
 // }
 Contact.propTypes= {

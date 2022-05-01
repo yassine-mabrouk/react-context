@@ -21,6 +21,7 @@ class Contacts extends Component {
             <Consumer>
                 {value => (
                           <div>
+                              <h3 className='text-center mt-5 mb-3'>Listes des Contacts</h3>
                           {value.contacts.map((contact) => (
                               <Contact key={contact.id} data={contact}  ></Contact>
                           ))}
