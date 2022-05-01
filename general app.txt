@@ -1,0 +1,27 @@
+// get info in rect 
+Render : inject component in  DOC 
+RCC : create component
+export default Contact ==> Contact
+export  Contact ==> {Contact}
+
+dans la class il ya un attribut props automatiquement 
+Contact.defaultProps: pour initialier les props par defaut 
+import PropTypes from 'prop-types': pour validation des props  (generer par impt)
+
+le file css dans APP  prendre la priorite  1 pour le style si le file est importe le dernier 
+==================================ch2=================
+state : les données d'une class 
+- to modifay in state you should use setState()
+- pour acceder a une props de type function il faut avoir arow function 
+
+============================ch3 formulaire ==========================
+lebrerie "npm install classnames" : pour faire des test sur les class dans le dom 
+exp:     className={classNames("form-control", {
+        'is-invalid':  props.error
+    })}
+=======================ch4 router ==================
+install router : npm i react-router-dom
+About/:id : segement dynamique 
+Appel segemant dynamique : {props.match.params.id}
+======================Api ===============
+componentDidMount(): ammount of compoent 
